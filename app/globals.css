@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  --scrollbar-width: 0px;
+  --scrollbar-bg: transparent;
+}
+
+body {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+}
+
+/* Remove scrollbar while keeping scrolling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* Smooth transitions */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* Link styles */
+a {
+  color: #1458e4;
+  text-decoration: none;
+
+  &:hover {
+    color: #0d47a1;
+  }
+}
+
+/* Selection colors */
+::selection {
+  background-color: #1458e4;
+  color: #ffffff;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid #1458e4;
+  outline-offset: 2px;
+}
+
+/* Custom selection for dark text */
+::-moz-selection {
+  background-color: #1458e4;
+  color: #ffffff;
+}
+
+/* Remove default button styles */
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

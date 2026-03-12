@@ -1,0 +1,13 @@
+{
+  "projectSettings": {
+    "sourceFilesOutsideRootDirectory": true
+  },
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "nodeVersion": "20.x",
+  "env": [
+    "NEXT_PUBLIC_CONTENTFUL_SPACE_ID",
+    "CONTENTFUL_ACCESS_TOKEN"
+  ]
+}

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Crawl-delay for respectful crawling (in seconds)
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://yourportfolio.com/sitemap.xml
