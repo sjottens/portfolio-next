@@ -1,7 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { usePathname } from 'next/navigation'
+import type { MouseEvent } from 'react'
+import { FiMail } from 'react-icons/fi'
+import { FaGithub } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa6";
 
 function ArrowUpIcon({ className }: { className?: string }) {
   return (
@@ -12,8 +16,22 @@ function ArrowUpIcon({ className }: { className?: string }) {
 }
 
 export default function Footer() {
+  const pathname = usePathname()
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleEmailClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== '/contact') {
+      return
+    }
+
+    event.preventDefault()
+    const contactFormSection = document.getElementById('contact-form')
+    if (contactFormSection) {
+      contactFormSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
   return (
@@ -33,13 +51,13 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <nav className="space-y-2">
               <Link href="/" className="text-light-gray hover:text-accent-gold transition-colors">
-                Home
+                Home |&nbsp;
               </Link>
               <Link href="/portfolio" className="text-light-gray hover:text-accent-gold transition-colors">
-                Portfolio
+                Portfolio |&nbsp;
               </Link>
               <Link href="/about" className="text-light-gray hover:text-accent-gold transition-colors">
-                About
+                About |&nbsp;
               </Link>
               <Link href="/contact" className="text-light-gray hover:text-accent-gold transition-colors">
                 Contact
@@ -52,27 +70,28 @@ export default function Footer() {
             <h3 className="text-xl font-bold mb-4">Connect</h3>
             <div className="flex items-center space-x-6">
               <a
-                href="https://github.com"
+                href="https://github.com/sjottens"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-light-gray hover:text-accent-gold transition-colors"
                 aria-label="GitHub"
               >
-                <FiGithub size={24} />
+                <FaGithub size={24} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/rogier-o-9707119/?locale=en"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-light-gray hover:text-accent-gold transition-colors"
                 aria-label="LinkedIn"
               >
-                <FiLinkedin size={24} />
+                <FaLinkedin size={24} />
               </a>
               <a
-                href="mailto:your.email@example.com"
+                href="/contact#contact-form"
+                onClick={handleEmailClick}
                 className="text-light-gray hover:text-accent-gold transition-colors"
-                aria-label="Email"
+                aria-label="Go to contact form"
               >
                 <FiMail size={24} />
               </a>

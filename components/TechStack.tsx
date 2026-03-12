@@ -1,66 +1,48 @@
 import {
+  SiHtml5,
+  SiBootstrap,
   SiReact,
   SiNextdotjs,
   SiTypescript,
   SiTailwindcss,
   SiJavascript,
-  SiGit,
   SiFigma,
-  SiWebpack,
+  SiClaude,
+  SiAngular,
+  SiCanva,
+  SiJira,
 } from 'react-icons/si'
+import { LuShoppingBasket } from "react-icons/lu";
+import { FaRobot } from "react-icons/fa6";
+import { SiContentful } from "react-icons/si";
+import { FaGithub } from "react-icons/fa";
+import { BiLogoVisualStudio, BiLogoCss3, BiLogoSass, BiSolidCameraMovie } from "react-icons/bi";
+import { DiPhotoshop, DiIllustrator } from "react-icons/di";
 
-type CustomIconProps = {
-  size?: number
-  className?: string
-  style?: React.CSSProperties
-}
-
-function CodexLogo({ size = 48, className, style }: CustomIconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 48 48"
-      className={className}
-      style={style}
-      aria-label="GPT-6.3-Codex"
-    >
-      <rect x="3" y="3" width="42" height="42" rx="10" fill="#111827" />
-      <path
-        d="M14 17h7v4h-3v6h3v4h-7V17zm20 0l-6 7 6 7h-5l-5-7 5-7h5z"
-        fill="#60a5fa"
-      />
-    </svg>
-  )
-}
-
-function ClaudeLogo({ size = 48, className, style }: CustomIconProps) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 48 48"
-      className={className}
-      style={style}
-      aria-label="Claude AI"
-    >
-      <rect x="3" y="3" width="42" height="42" rx="10" fill="#1f2937" />
-      <circle cx="24" cy="24" r="12" fill="#efc27e" />
-      <path d="M20 18h8v4h-4v8h4v4h-8V18z" fill="#111827" />
-    </svg>
-  )
-}
 
 const technologies = [
+  { name: 'HTML5', icon: SiHtml5, color: '#e34c26' },
+  { name: 'CSS3', icon: BiLogoCss3, color: '#264de4' },
+  { name: 'Sass', icon: BiLogoSass, color: '#cc6699' },
   { name: 'React', icon: SiReact, color: '#61dafb' },
   { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
+  { name: 'Angular', icon: SiAngular, color: '#dd0031' },
   { name: 'TypeScript', icon: SiTypescript, color: '#3178c6' },
+  { name: 'Bootstrap', icon: SiBootstrap, color: '#7952b3' },
   { name: 'TailwindCSS', icon: SiTailwindcss, color: '#38b2ac' },
   { name: 'JavaScript', icon: SiJavascript, color: '#f7df1e' },
-  { name: 'Git', icon: SiGit, color: '#f1502f' },
+  { name: 'Git', icon: FaGithub, color: '#f1502f' },
+  { name: 'Jira', icon: SiJira, color: '#0052cc' },
   { name: 'Figma', icon: SiFigma, color: '#a259ff' },
-  { name: 'GPT-6.3-Codex', icon: CodexLogo, color: '#60a5fa' },
-  { name: 'Claude AI', icon: ClaudeLogo, color: '#efc27e' },
+  { name: 'Photoshop', icon: DiPhotoshop, color: '#31a8ff' },
+  { name: 'Canva', icon: SiCanva, color: '#00c4cc' },
+  { name: 'CapCut', icon: BiSolidCameraMovie, color: '#000' },
+  { name: 'Illustrator', icon: DiIllustrator, color: '#ff9a00' },
+  { name: 'GPT-6.3-Codex', icon: FaRobot, color: '#60a5fa' },
+  { name: 'Claude AI', icon: SiClaude, color: '#d97757' },
+  { name: 'Contentful', icon: SiContentful, color: '#000' },
+  { name: 'Intershop', icon: LuShoppingBasket, color: '#C6183D' },
+  { name: 'Visual Studio Code', icon: BiLogoVisualStudio, color: '#007acc' },
 ]
 
 export default function TechStack() {

@@ -1,21 +1,21 @@
 'use client'
 
-import { FiGithub, FiLinkedin } from 'react-icons/fi'
+import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import ContactForm from '@/components/ContactForm'
 
 export default function Contact() {
   const contactMethods = [
     {
       title: 'GitHub',
-      value: '@yourprofile',
-      icon: FiGithub,
-      link: 'https://github.com',
+      value: '@RogierOttens',
+      icon: FaGithub,
+      link: 'https://github.com/sjottens',
     },
     {
       title: 'LinkedIn',
-      value: '@yourprofile',
-      icon: FiLinkedin,
-      link: 'https://linkedin.com',
+      value: '@RogierOttens',
+      icon: FaLinkedin,
+      link: 'https://www.linkedin.com/in/rogier-o-9707119/?locale=en',
     },
   ]
 
@@ -41,7 +41,7 @@ export default function Contact() {
         </div>
 
         {/* Contact Form */}
-        <div data-aos="fade-up" data-aos-delay="300">
+        <div id="contact-form" data-aos="fade-up" data-aos-delay="300">
           <div className="bg-light-gray rounded-xl p-8 md:p-12">
             <h2 className="text-3xl font-bold text-dark-gray mb-8 text-center">Send Me a Message</h2>
             <ContactForm />
@@ -94,7 +94,7 @@ export default function Contact() {
               {
                 question: 'What is your project process?',
                 answer:
-                  'I follow a structured approach: discovery, planning, design system creation, development, testing, and deployment. Regular communication and feedback loops ensure the final product meets your expectations.',
+                  'I follow a structured approach: discovery, planning, design creation, development, testing, and deployment. Regular communication and feedback loops ensure the final product meets your expectations.',
               },
               {
                 question: 'What is your pricing model?',

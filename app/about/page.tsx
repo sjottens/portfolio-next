@@ -9,14 +9,14 @@ export default async function About() {
       period: '2024 - Present',
       title: 'Senior Frontend Developer',
       description:
-        'Leading frontend development initiatives and mentoring junior developers.',
+        'Developed responsive web applications using Modern frameworks and AI technologies.',
       icon: '🚀',
     },
     {
       period: '2013 - 2024',
       title: 'Frontend Developer',
       description:
-        'Developed responsive web applications using modern frameworks and technologies.',
+        'Developed responsive web applications using Intershop framework and technologies.',
       icon: '💻',
     },
     {
@@ -76,17 +76,17 @@ export default async function About() {
             </p>
             <p className="text-lg text-medium-gray leading-relaxed mb-6">
               This unique background gives me a distinct advantage in frontend development. I don't just
-              write code—I understand design systems, user experiences, and the importance of pixel-perfect
+              write code, I understand user experiences, and the importance of pixel-perfect
               implementation. I specialize in:
             </p>
             <ul className="space-y-3 mb-8">
               {[
                 'Responsive Web Design',
-                'Frontend Architecture',
+                'UI Implementation',
                 'Component-Based Development',
                 'Performance Optimization',
-                'Accessibility & Semantics',
                 'Cross-browser Compatibility',
+                'Use Claude AI and GPT-6.3-Codex for code generation and optimization',
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-dark-gray">
                   <span className="w-2 h-2 bg-primary-blue rounded-full"></span>
@@ -187,15 +187,15 @@ export default async function About() {
             {[
               {
                 category: 'Frontend Technologies',
-                skills: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'JavaScript ES6+'],
+                skills: ['HTML5', 'CSS', 'SCSS', 'TailwindCSS', 'JavaScript/TyeScript'],
               },
               {
-                category: 'Design & UX',
-                skills: ['Responsive Design', 'Figma', 'UI/UX Principles', 'Accessibility', 'Web Standards'],
+                category: 'Frameworks & Libraries',
+                skills: ['Intershop', 'Angular', 'React', 'Vue3', 'Nextjs'],
               },
               {
                 category: 'Tools & Workflow',
-                skills: ['Git & GitHub', 'Webpack', 'Performance Optimization', 'SEO', 'Debugging'],
+                skills: ['Git & GitHub', 'SCRUM', 'Jira', 'Debugging', 'GitHub Copilot'],
               },
             ].map((skillGroup, index) => (
               <div

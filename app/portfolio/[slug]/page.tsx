@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type TouchEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -16,6 +16,30 @@ export default function PortfolioDetail({ params }: PageProps) {
   const [project, setProject] = useState<Project | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [slug, setSlug] = useState<string>('')
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
+  const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const galleryImages = project?.galleryImages || []
+  const galleryLength = galleryImages.length
+
+  const showNextImage = useCallback(() => {
+    setActiveImageIndex((current) => {
+      if (current === null || galleryLength === 0) {
+        return current
+      }
+
+      return (current + 1) % galleryLength
+    })
+  }, [galleryLength])
+
+  const showPreviousImage = useCallback(() => {
+    setActiveImageIndex((current) => {
+      if (current === null || galleryLength === 0) {
+        return current
+      }
+
+      return (current - 1 + galleryLength) % galleryLength
+    })
+  }, [galleryLength])
 
   useEffect(() => {
     const getSlug = async () => {
@@ -46,6 +70,57 @@ export default function PortfolioDetail({ params }: PageProps) {
 
     fetchProject()
   }, [slug])
+
+  useEffect(() => {
+    if (activeImageIndex === null) {
+      document.body.style.overflow = ''
+      return
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveImageIndex(null)
+      }
+
+      if (event.key === 'ArrowRight') {
+        showNextImage()
+      }
+
+      if (event.key === 'ArrowLeft') {
+        showPreviousImage()
+      }
+    }
+
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [activeImageIndex, showNextImage, showPreviousImage])
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    setTouchStartX(event.changedTouches[0].clientX)
+  }
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX === null) {
+      return
+    }
+
+    const touchEndX = event.changedTouches[0].clientX
+    const deltaX = touchEndX - touchStartX
+    const swipeThreshold = 40
+
+    if (deltaX > swipeThreshold) {
+      showPreviousImage()
+    } else if (deltaX < -swipeThreshold) {
+      showNextImage()
+    }
+
+    setTouchStartX(null)
+  }
 
   if (isLoading) {
     return (
@@ -81,6 +156,7 @@ export default function PortfolioDetail({ params }: PageProps) {
               alt={project.thumbnail.title}
               fill
               className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 896px"
               priority
             />
           </div>
@@ -168,8 +244,11 @@ export default function PortfolioDetail({ params }: PageProps) {
             <h2 className="text-2xl font-bold text-dark-gray mb-6">Gallery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.galleryImages.map((image, index) => (
-                <div
+                <button
                   key={`${image.url}-${index}`}
+                  type="button"
+                  aria-label={`Open image: ${image.title}`}
+                  onClick={() => setActiveImageIndex(index)}
                   className="relative h-64 md:h-80 rounded-lg overflow-hidden"
                 >
                   <Image
@@ -179,8 +258,70 @@ export default function PortfolioDetail({ params }: PageProps) {
                     className="object-cover hover:scale-110 transition-transform duration-300"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
-                </div>
+                </button>
               ))}
+            </div>
+          </div>
+        )}
+
+        {project.galleryImages && activeImageIndex !== null && (
+          <div
+            className="fixed inset-0 z-50 bg-black/85 p-4 md:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Expanded gallery image"
+            onClick={() => setActiveImageIndex(null)}
+          >
+            <div className="absolute z-20 top-4 left-1/2 -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs md:text-sm text-white">
+              {activeImageIndex + 1} / {galleryLength}
+            </div>
+
+            <button
+              type="button"
+              aria-label="Close image preview"
+              onClick={() => setActiveImageIndex(null)}
+              className="absolute z-20 top-4 right-4 md:top-6 md:right-8 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/70 text-white text-3xl leading-none flex items-center justify-center"
+            >
+              ×
+            </button>
+
+            <button
+              type="button"
+              aria-label="Previous image"
+              onClick={(event) => {
+                event.stopPropagation()
+                showPreviousImage()
+              }}
+              className="absolute z-20 left-3 md:left-6 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/70 text-white text-2xl flex items-center justify-center"
+            >
+              ‹
+            </button>
+
+            <button
+              type="button"
+              aria-label="Next image"
+              onClick={(event) => {
+                event.stopPropagation()
+                showNextImage()
+              }}
+              className="absolute z-20 right-3 md:right-6 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/70 text-white text-2xl flex items-center justify-center"
+            >
+              ›
+            </button>
+
+            <div
+              className="relative h-full w-full max-w-[800px] mx-auto"
+              onClick={(event) => event.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <Image
+                src={galleryImages[activeImageIndex].url}
+                alt={galleryImages[activeImageIndex].title}
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) calc(100vw - 2rem), 800px"
+              />
             </div>
           </div>
         )}
