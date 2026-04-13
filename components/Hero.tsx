@@ -1,10 +1,14 @@
 import Link from 'next/link'
+import { getMessages, type Locale } from '@/lib/locale'
 
 interface HeroProps {
   bannerImageUrl?: string
+  locale: Locale
 }
 
-export default function Hero({ bannerImageUrl }: HeroProps) {
+export default function Hero({ bannerImageUrl, locale }: HeroProps) {
+  const messages = getMessages(locale)
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center pt-24 px-4 sm:px-6 lg:px-8"
@@ -24,7 +28,7 @@ export default function Hero({ bannerImageUrl }: HeroProps) {
           className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
           data-aos="fade-up"
         >
-          Frontend <span className="text-accent-gold">UI </span>Developer
+          {messages.hero.titlePrefix} <span className="text-accent-gold">{messages.hero.titleAccent} </span>{messages.hero.titleSuffix}
         </h1>
 
         <p
@@ -32,7 +36,7 @@ export default function Hero({ bannerImageUrl }: HeroProps) {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          I am a Front-end UI Developer with 11 years of experience. Before that I worked 15 years as a DTP specialist. Because of this combination I specialize not only in designing interfaces but also in implementing them perfectly in code. I focus on building clean, responsive and user-friendly interfaces that work seamlessly on both mobile and desktop.
+          {messages.hero.description}
         </p>
 
         <div
@@ -44,13 +48,13 @@ export default function Hero({ bannerImageUrl }: HeroProps) {
             href="/portfolio"
             className="bg-primary-blue text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105"
           >
-            View My Work
+            {messages.hero.primaryCta}
           </Link>
           <Link
             href="/contact"
             className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-dark-gray transition-all"
           >
-            Get In Touch
+            {messages.hero.secondaryCta}
           </Link>
         </div>
 

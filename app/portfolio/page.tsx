@@ -4,11 +4,14 @@ import { useEffect, useState } from 'react'
 import { getProjects } from '@/lib/contentful'
 import ProjectCard from '@/components/ProjectCard'
 import type { Project } from '@/lib/contentful'
+import { useLanguage } from '@/components/LanguageProvider'
 
 export default function Portfolio() {
   const [projects, setProjects] = useState<Project[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedTech, setSelectedTech] = useState<string>('')
+  const { messages } = useLanguage()
+  const t = messages.portfolio
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -44,18 +47,61 @@ export default function Portfolio() {
             className="text-5xl md:text-6xl font-bold text-dark-gray mb-4"
             data-aos="fade-up"
           >
-            Portfolio
+            {t.title}
           </h1>
           <p
             className="text-xl text-medium-gray max-w-2xl mx-auto"
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Explore my recent projects and see how I've helped clients build amazing digital experiences.
+            {t.intro}
           </p>
         </div>
 
+        {/* Projects Grid */}
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-light-gray border-t-primary-blue"></div>
+          </div>
+        ) : filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20">
+            <p className="text-xl text-medium-gray mb-6">
+              {selectedTech
+                ? `${t.noProjectsWith} ${selectedTech}`
+                : t.noProjects}
+            </p>
+            {selectedTech && (
+              <button
+                onClick={() => setSelectedTech('')}
+                className="text-primary-blue font-semibold hover:underline"
+              >
+                {t.clearFilter}
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Filter Bar */}
+        <div className="text-center mb-8">
+          <h2 className="text-5xl md:text-6xl font-bold text-dark-gray mb-4"
+            data-aos="fade-up"
+          >
+            {t.workedWithTitle}
+          </h2>
+          <p
+            className="text-xl text-medium-gray max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            {t.workedWithIntro}
+          </p>
+        </div>
         {allTechnologies.length > 0 && (
           <div
             className="mb-12 flex flex-wrap justify-center gap-3"
@@ -70,7 +116,7 @@ export default function Portfolio() {
                   : 'bg-light-gray text-dark-gray hover:bg-medium-gray hover:text-white'
               }`}
             >
-              All
+              {t.all}
             </button>
             {allTechnologies.map((tech) => (
               <button
@@ -85,35 +131,6 @@ export default function Portfolio() {
                 {tech}
               </button>
             ))}
-          </div>
-        )}
-
-        {/* Projects Grid */}
-        {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-light-gray border-t-primary-blue"></div>
-          </div>
-        ) : filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-xl text-medium-gray mb-6">
-              {selectedTech
-                ? `No projects found with ${selectedTech}`
-                : 'No projects available yet'}
-            </p>
-            {selectedTech && (
-              <button
-                onClick={() => setSelectedTech('')}
-                className="text-primary-blue font-semibold hover:underline"
-              >
-                Clear filter
-              </button>
-            )}
           </div>
         )}
       </div>

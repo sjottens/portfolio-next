@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import CookieBanner from '@/components/CookieBanner'
 import CursorEffectGate from '@/components/CursorEffectGate'
 import AOSProvider from '@/components/AOSProvider'
+import LanguageProvider from '@/components/LanguageProvider'
+import { getServerLocale } from '@/lib/locale.server'
 
 export const metadata: Metadata = {
   title: {
@@ -68,13 +70,15 @@ export const viewport: Viewport = {
   userScalable: true,
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const locale = await getServerLocale()
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://images.ctfassets.net" crossOrigin="" />
@@ -91,18 +95,20 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-white text-black" suppressHydrationWarning>
-        <CursorEffectGate />
-        <Header />
-        <AOSProvider>
-          <main
-            className="min-h-screen"
-            suppressHydrationWarning
-          >
-            {children}
-          </main>
-        </AOSProvider>
-        <Footer />
-        <CookieBanner />
+        <LanguageProvider initialLocale={locale}>
+          <CursorEffectGate />
+          <Header />
+          <AOSProvider>
+            <main
+              className="min-h-screen"
+              suppressHydrationWarning
+            >
+              {children}
+            </main>
+          </AOSProvider>
+          <Footer />
+          <CookieBanner />
+        </LanguageProvider>
       </body>
     </html>
   )

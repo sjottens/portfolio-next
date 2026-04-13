@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
+import { useLanguage } from '@/components/LanguageProvider'
 
 interface FormData {
   name: string
@@ -23,24 +24,26 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [errors, setErrors] = useState<Partial<FormData>>({})
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const { messages } = useLanguage()
+  const t = messages.contactForm
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {}
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required'
+      newErrors.name = t.validation.nameRequired
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
+      newErrors.email = t.validation.emailRequired
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email'
+      newErrors.email = t.validation.emailInvalid
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required'
+      newErrors.message = t.validation.messageRequired
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters'
+      newErrors.message = t.validation.messageShort
     }
 
     setErrors(newErrors)
@@ -76,9 +79,7 @@ export default function ContactForm() {
 
     try {
       if (!serviceId || !templateId || !publicKey) {
-        throw new Error(
-          'EmailJS is not configured yet. Add NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, and NEXT_PUBLIC_EMAILJS_PUBLIC_KEY in .env.local.'
-        )
+        throw new Error(t.validation.configError)
       }
 
       await emailjs.send(
@@ -107,7 +108,7 @@ export default function ContactForm() {
       setSubmitError(
         error instanceof Error
           ? error.message
-          : 'Something went wrong while sending your message. Please try again.'
+          : t.validation.fallbackError
       )
     } finally {
       setIsLoading(false)
@@ -117,9 +118,9 @@ export default function ContactForm() {
   if (submitted) {
     return (
       <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center animate-fade-up">
-        <h3 className="text-2xl font-bold text-green-800 mb-2">Message Sent!</h3>
+        <h3 className="text-2xl font-bold text-green-800 mb-2">{t.successTitle}</h3>
         <p className="text-green-700">
-          Thank you for reaching out. I'll get back to you as soon as possible.
+          {t.successBody}
         </p>
       </div>
     )
@@ -136,7 +137,7 @@ export default function ContactForm() {
       {/* Name Field */}
       <div>
         <label htmlFor="name" className="block text-dark-gray font-semibold mb-2">
-          Full Name
+          {t.fullName}
         </label>
         <input
           type="text"
@@ -144,7 +145,7 @@ export default function ContactForm() {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="John Doe"
+          placeholder={t.namePlaceholder}
           className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none ${
             errors.name
               ? 'border-red-500 focus:border-red-600'
@@ -157,7 +158,7 @@ export default function ContactForm() {
       {/* Email Field */}
       <div>
         <label htmlFor="email" className="block text-dark-gray font-semibold mb-2">
-          Email Address
+          {t.email}
         </label>
         <input
           type="email"
@@ -165,7 +166,7 @@ export default function ContactForm() {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="john@example.com"
+          placeholder={t.emailPlaceholder}
           className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none ${
             errors.email
               ? 'border-red-500 focus:border-red-600'
@@ -178,14 +179,14 @@ export default function ContactForm() {
       {/* Message Field */}
       <div>
         <label htmlFor="message" className="block text-dark-gray font-semibold mb-2">
-          Message
+          {t.message}
         </label>
         <textarea
           id="message"
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Tell me about your project..."
+          placeholder={t.messagePlaceholder}
           rows={6}
           className={`w-full px-4 py-3 rounded-lg border-2 transition-colors focus:outline-none resize-none ${
             errors.message
@@ -202,7 +203,7 @@ export default function ContactForm() {
         disabled={isLoading}
         className="w-full bg-primary-blue text-white font-semibold py-3 px-6 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
       >
-        {isLoading ? 'Sending...' : 'Send Message'}
+        {isLoading ? t.sending : t.send}
       </button>
     </form>
   )

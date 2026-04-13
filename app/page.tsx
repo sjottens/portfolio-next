@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import TechStack from '@/components/TechStack'
 import LatestProjects from '@/components/LatestProjects'
 import { getSiteImages } from '@/lib/contentful'
+import { getServerLocale } from '@/lib/locale.server'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -18,12 +19,13 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const { bannerImageUrl } = await getSiteImages()
+  const locale = await getServerLocale()
 
   return (
     <div>
-      <Hero bannerImageUrl={bannerImageUrl} />
-      <TechStack />
-      <LatestProjects />
+      <Hero bannerImageUrl={bannerImageUrl} locale={locale} />
+      <TechStack locale={locale} />
+      <LatestProjects locale={locale} />
     </div>
   )
 }

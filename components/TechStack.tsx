@@ -18,6 +18,7 @@ import { SiContentful } from "react-icons/si";
 import { FaGithub } from "react-icons/fa";
 import { BiLogoVisualStudio, BiLogoCss3, BiLogoSass, BiSolidCameraMovie } from "react-icons/bi";
 import { DiPhotoshop, DiIllustrator } from "react-icons/di";
+import { getMessages, type Locale } from '@/lib/locale'
 
 
 const technologies = [
@@ -45,7 +46,13 @@ const technologies = [
   { name: 'Visual Studio Code', icon: BiLogoVisualStudio, color: '#007acc' },
 ]
 
-export default function TechStack() {
+type TechStackProps = {
+  locale: Locale
+}
+
+export default function TechStack({ locale }: TechStackProps) {
+  const messages = getMessages(locale)
+
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-6xl mx-auto">
@@ -53,14 +60,14 @@ export default function TechStack() {
           className="text-4xl md:text-5xl font-bold text-center text-dark-gray mb-4"
           data-aos="fade-up"
         >
-          Tech Stack
+          {messages.techStack.heading}
         </h2>
         <p
           className="text-center text-medium-gray text-lg mb-16 max-w-2xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          Technologies and tools I use to build exceptional digital experiences
+          {messages.techStack.description}
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">

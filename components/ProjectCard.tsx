@@ -1,7 +1,10 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { HiArrowRight } from 'react-icons/hi'
 import type { Project } from '@/lib/contentful'
+import { useLanguage } from '@/components/LanguageProvider'
 
 interface ProjectCardProps {
   project: Project
@@ -9,6 +12,8 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const { messages } = useLanguage()
+
   return (
     <Link href={`/portfolio/${project.slug}`}>
       <div
@@ -57,7 +62,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Link */}
           <div className="flex items-center text-primary-blue font-semibold group-hover:gap-2 transition-all">
-            View Project
+            {messages.projectCard.viewProject}
             <HiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>

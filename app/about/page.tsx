@@ -1,29 +1,24 @@
 import Image from 'next/image'
 import { getSiteImages } from '@/lib/contentful'
+import { getMessages } from '@/lib/locale'
+import { getServerLocale } from '@/lib/locale.server'
 
 export default async function About() {
   const { profileImageUrl } = await getSiteImages()
+  const locale = await getServerLocale()
+  const messages = getMessages(locale)
 
   const timeline = [
     {
-      period: '2024 - Present',
-      title: 'Senior Frontend Developer',
-      description:
-        'Developed responsive web applications using Modern frameworks and AI technologies.',
+      ...messages.about.timeline[0],
       icon: '🚀',
     },
     {
-      period: '2013 - 2024',
-      title: 'Frontend Developer',
-      description:
-        'Developed responsive web applications using Intershop framework and technologies.',
+      ...messages.about.timeline[1],
       icon: '💻',
     },
     {
-      period: '1998 - 2013',
-      title: 'DTP Specialist',
-      description:
-        'Specialized in print design and layout, developing an eye for design and detail.',
+      ...messages.about.timeline[2],
       icon: '🎨',
     },
   ]
@@ -37,14 +32,14 @@ export default async function About() {
             className="text-5xl md:text-6xl font-bold text-dark-gray mb-4"
             data-aos="fade-up"
           >
-            About Me
+            {messages.about.title}
           </h1>
           <p
             className="text-xl text-medium-gray max-w-2xl mx-auto"
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            A design-focused developer with a passion for creating beautiful, functional web experiences.
+            {messages.about.intro}
           </p>
         </div>
 
@@ -67,27 +62,12 @@ export default async function About() {
           {/* Content */}
           <div data-aos="fade-left">
             <h2 className="text-4xl font-bold text-dark-gray mb-6">
-              Frontend Developer & UI Designer
+              {messages.about.profileTitle}
             </h2>
-            <p className="text-lg text-medium-gray leading-relaxed mb-6">
-              I'm a passionate frontend developer with 11 years of professional experience in building
-              user interfaces. My journey started in 1998 as a DTP specialist, where I honed my skills
-              in design principles, typography, and visual hierarchy.
-            </p>
-            <p className="text-lg text-medium-gray leading-relaxed mb-6">
-              This unique background gives me a distinct advantage in frontend development. I don't just
-              write code, I understand user experiences, and the importance of pixel-perfect
-              implementation. I specialize in:
-            </p>
+            <p className="text-lg text-medium-gray leading-relaxed mb-6">{messages.about.paragraphs[0]}</p>
+            <p className="text-lg text-medium-gray leading-relaxed mb-6">{messages.about.paragraphs[1]}</p>
             <ul className="space-y-3 mb-8">
-              {[
-                'Responsive Web Design',
-                'UI Implementation',
-                'Component-Based Development',
-                'Performance Optimization',
-                'Cross-browser Compatibility',
-                'Use Claude AI and GPT-6.3-Codex for code generation and optimization',
-              ].map((item) => (
+              {messages.about.specialties.map((item) => (
                 <li key={item} className="flex items-center gap-3 text-dark-gray">
                   <span className="w-2 h-2 bg-primary-blue rounded-full"></span>
                   {item}
@@ -103,7 +83,7 @@ export default async function About() {
             className="text-4xl font-bold text-dark-gray mb-12 text-center"
             data-aos="fade-up"
           >
-            Career Timeline
+            {messages.about.timelineTitle}
           </h2>
 
           <div className="space-y-8">
@@ -180,24 +160,11 @@ export default async function About() {
             className="text-4xl font-bold text-dark-gray mb-12 text-center"
             data-aos="fade-up"
           >
-            Skills & Expertise
+            {messages.about.skillsTitle}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                category: 'Frontend Technologies',
-                skills: ['HTML5', 'CSS', 'SCSS', 'TailwindCSS', 'JavaScript/TyeScript'],
-              },
-              {
-                category: 'Frameworks & Libraries',
-                skills: ['Intershop', 'Angular', 'React', 'Vue3', 'Nextjs'],
-              },
-              {
-                category: 'Tools & Workflow',
-                skills: ['Git & GitHub', 'SCRUM', 'Jira', 'Debugging', 'GitHub Copilot'],
-              },
-            ].map((skillGroup, index) => (
+            {messages.about.skillGroups.map((skillGroup, index) => (
               <div
                 key={skillGroup.category}
                 className="p-8 bg-light-gray rounded-xl"

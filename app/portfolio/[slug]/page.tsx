@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 import { FiGithub, FiExternalLink } from 'react-icons/fi'
 import { getProjectBySlug } from '@/lib/contentful'
 import type { Project } from '@/lib/contentful'
+import { useLanguage } from '@/components/LanguageProvider'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -18,6 +19,8 @@ export default function PortfolioDetail({ params }: PageProps) {
   const [slug, setSlug] = useState<string>('')
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
   const [touchStartX, setTouchStartX] = useState<number | null>(null)
+  const { messages } = useLanguage()
+  const t = messages.portfolio
   const galleryImages = project?.galleryImages || []
   const galleryLength = galleryImages.length
 
@@ -142,7 +145,7 @@ export default function PortfolioDetail({ params }: PageProps) {
           href="/portfolio"
           className="text-primary-blue font-semibold hover:underline mb-8 inline-block"
         >
-          ← Back to Portfolio
+          ← {t.backToPortfolio}
         </Link>
 
         {/* Hero Image */}
@@ -193,7 +196,7 @@ export default function PortfolioDetail({ params }: PageProps) {
               className="flex items-center gap-2 bg-primary-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-all"
             >
               <FiExternalLink />
-              Visit Website
+              {t.visitWebsite}
             </a>
           )}
           {project.githubUrl && (
@@ -204,14 +207,14 @@ export default function PortfolioDetail({ params }: PageProps) {
               className="flex items-center gap-2 border-2 border-primary-blue text-primary-blue px-6 py-3 rounded-lg font-semibold hover:bg-primary-blue hover:text-white transition-all"
             >
               <FiGithub />
-              View Code
+              {t.viewCode}
             </a>
           )}
         </div>
 
         {/* Technologies */}
         <div className="mb-12" data-aos="fade-up" data-aos-delay="300">
-          <h2 className="text-2xl font-bold text-dark-gray mb-4">Technologies Used</h2>
+          <h2 className="text-2xl font-bold text-dark-gray mb-4">{t.technologiesUsed}</h2>
           <div className="flex flex-wrap gap-3">
             {project.technologies.map((tech) => (
               <span
@@ -231,7 +234,7 @@ export default function PortfolioDetail({ params }: PageProps) {
             data-aos="fade-up"
             data-aos-delay="400"
           >
-            <h2 className="text-2xl font-bold text-dark-gray mb-4">Project Details</h2>
+            <h2 className="text-2xl font-bold text-dark-gray mb-4">{t.projectDetails}</h2>
             <p className="whitespace-pre-wrap leading-relaxed text-medium-gray">
               {project.content}
             </p>
@@ -241,13 +244,13 @@ export default function PortfolioDetail({ params }: PageProps) {
         {/* Gallery */}
         {project.galleryImages && project.galleryImages.length > 0 && (
           <div className="mb-12" data-aos="fade-up" data-aos-delay="500">
-            <h2 className="text-2xl font-bold text-dark-gray mb-6">Gallery</h2>
+            <h2 className="text-2xl font-bold text-dark-gray mb-6">{t.gallery}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.galleryImages.map((image, index) => (
                 <button
                   key={`${image.url}-${index}`}
                   type="button"
-                  aria-label={`Open image: ${image.title}`}
+                  aria-label={`${t.openImage} ${image.title}`}
                   onClick={() => setActiveImageIndex(index)}
                   className="relative h-64 md:h-80 rounded-lg overflow-hidden"
                 >
@@ -269,7 +272,7 @@ export default function PortfolioDetail({ params }: PageProps) {
             className="fixed inset-0 z-50 bg-black/85 p-4 md:p-8"
             role="dialog"
             aria-modal="true"
-            aria-label="Expanded gallery image"
+            aria-label={t.expandedImage}
             onClick={() => setActiveImageIndex(null)}
           >
             <div className="absolute z-20 top-4 left-1/2 -translate-x-1/2 rounded-full bg-black/70 px-3 py-1 text-xs md:text-sm text-white">
@@ -278,7 +281,7 @@ export default function PortfolioDetail({ params }: PageProps) {
 
             <button
               type="button"
-              aria-label="Close image preview"
+              aria-label={t.closeImage}
               onClick={() => setActiveImageIndex(null)}
               className="absolute z-20 top-4 right-4 md:top-6 md:right-8 h-10 w-10 md:h-12 md:w-12 rounded-full bg-black/70 text-white text-3xl leading-none flex items-center justify-center"
             >
@@ -287,7 +290,7 @@ export default function PortfolioDetail({ params }: PageProps) {
 
             <button
               type="button"
-              aria-label="Previous image"
+              aria-label={t.previousImage}
               onClick={(event) => {
                 event.stopPropagation()
                 showPreviousImage()
@@ -299,7 +302,7 @@ export default function PortfolioDetail({ params }: PageProps) {
 
             <button
               type="button"
-              aria-label="Next image"
+              aria-label={t.nextImage}
               onClick={(event) => {
                 event.stopPropagation()
                 showNextImage()
@@ -333,16 +336,16 @@ export default function PortfolioDetail({ params }: PageProps) {
           data-aos-delay="600"
         >
           <h2 className="text-2xl font-bold text-dark-gray mb-4">
-            Interested in working together?
+            {t.ctaTitle}
           </h2>
           <p className="text-medium-gray mb-6">
-            Let's discuss your next project and see how I can help bring your ideas to life.
+            {t.ctaBody}
           </p>
           <Link
             href="/contact"
             className="inline-block bg-primary-blue text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105"
           >
-            Get In Touch
+            {t.ctaButton}
           </Link>
         </div>
       </div>

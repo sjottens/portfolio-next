@@ -102,3 +102,183 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
+@keyframes transform-animation {
+  0% {
+    transform: translateX(-55%);
+  }
+
+  100% {
+    transform: translateX(55%);
+  }
+}
+
+@keyframes opacity-animation {
+  0%,
+  100% {
+    opacity: 0.55;
+    filter: saturate(1);
+  }
+
+  50% {
+    opacity: 1;
+    filter: saturate(1.3);
+  }
+}
+
+@keyframes masked-scan-sweep {
+  0% {
+    transform: translateX(-56%);
+  }
+
+  62% {
+    transform: translateX(56%);
+  }
+
+  100% {
+    transform: translateX(56%);
+  }
+}
+
+@keyframes masked-scan-ltr {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  64% {
+    transform: translateX(220%);
+  }
+
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+@keyframes masked-text-cycle {
+  0%,
+  66% {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  82%,
+  92% {
+    opacity: 0;
+    filter: blur(1px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes masked-color-cycle {
+  0%,
+  64% {
+    opacity: 1;
+    filter: saturate(1.2);
+  }
+
+  82%,
+  92% {
+    opacity: 0.45;
+    filter: saturate(0.85);
+  }
+
+  100% {
+    opacity: 1;
+    filter: saturate(1.2);
+  }
+}
+
+@keyframes uiverse-transform-animation {
+  0% {
+    transform: translate(-55%);
+  }
+
+  100% {
+    transform: translate(55%);
+  }
+}
+
+@keyframes uiverse-opacity-animation {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 0;
+  }
+}
+
+@keyframes uiverse-letter-anim {
+  0% {
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+    text-shadow: 0 0 4px #fff;
+    transform: scale(1.1) translateY(-2px);
+  }
+
+  20% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes uiverse2-wobble {
+  0% {
+    transform: translateX(-90%);
+  }
+
+  50% {
+    transform: translateX(90%);
+  }
+
+  100% {
+    transform: translateX(-90%);
+  }
+}
+
+@keyframes uiverse2-scrolling {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes uiverse2-shadow {
+  0% {
+    background-position: -98% 0;
+  }
+
+  100% {
+    background-position: 102% 0;
+  }
+}
+
+@keyframes loader-gallery-underline {
+  0% {
+    transform: translateX(-80%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(200%);
+    opacity: 1;
+  }
+}

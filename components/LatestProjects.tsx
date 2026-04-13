@@ -2,7 +2,15 @@ import Link from 'next/link'
 import { getProjects } from '@/lib/contentful'
 import ProjectCard from '@/components/ProjectCard'
 import type { Project } from '@/lib/contentful'
-export default async function LatestProjects() {
+import { getMessages, type Locale } from '@/lib/locale'
+
+type LatestProjectsProps = {
+  locale: Locale
+}
+
+export default async function LatestProjects({ locale }: LatestProjectsProps) {
+  const messages = getMessages(locale)
+
   let projects: Project[] = []
 
   try {
@@ -18,14 +26,14 @@ export default async function LatestProjects() {
           className="text-4xl md:text-5xl font-bold text-center text-dark-gray mb-4"
           data-aos="fade-up"
         >
-          Latest Projects
+          {messages.latestProjects.heading}
         </h2>
         <p
           className="text-center text-medium-gray text-lg mb-16 max-w-2xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          A selection of recent work showcasing my expertise in frontend development
+          {messages.latestProjects.description}
         </p>
 
         {projects.length > 0 ? (
@@ -41,13 +49,13 @@ export default async function LatestProjects() {
                 href="/portfolio"
                 className="inline-block bg-primary-blue text-white px-8 py-4 rounded-lg font-semibold hover:bg-opacity-90 transition-all transform hover:scale-105"
               >
-                View All Projects
+                {messages.latestProjects.cta}
               </Link>
             </div>
           </>
         ) : (
           <p className="text-center text-medium-gray text-lg py-12">
-            No projects available yet. Check back soon!
+            {messages.latestProjects.empty}
           </p>
         )}
       </div>

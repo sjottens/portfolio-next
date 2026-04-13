@@ -1,9 +1,12 @@
-'use client'
-
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import ContactForm from '@/components/ContactForm'
+import { getMessages } from '@/lib/locale'
+import { getServerLocale } from '@/lib/locale.server'
 
-export default function Contact() {
+export default async function Contact() {
+  const locale = await getServerLocale()
+  const messages = getMessages(locale)
+
   const contactMethods = [
     {
       title: 'GitHub',
@@ -28,22 +31,21 @@ export default function Contact() {
             className="text-5xl md:text-6xl font-bold text-dark-gray mb-4"
             data-aos="fade-up"
           >
-            Get In Touch
+            {messages.contact.title}
           </h1>
           <p
             className="text-xl text-medium-gray max-w-2xl mx-auto"
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Have a project in mind? I'd love to hear about it. Send me a message and let's discuss how
-            I can help bring your ideas to life.
+            {messages.contact.intro}
           </p>
         </div>
 
         {/* Contact Form */}
         <div id="contact-form" data-aos="fade-up" data-aos-delay="300">
           <div className="bg-light-gray rounded-xl p-8 md:p-12">
-            <h2 className="text-3xl font-bold text-dark-gray mb-8 text-center">Send Me a Message</h2>
+            <h2 className="text-3xl font-bold text-dark-gray mb-8 text-center">{messages.contact.formTitle}</h2>
             <ContactForm />
           </div>
         </div>
@@ -76,32 +78,11 @@ export default function Contact() {
             className="text-3xl font-bold text-dark-gray mb-8 text-center"
             data-aos="fade-up"
           >
-            Frequently Asked Questions
+            {messages.contact.faqTitle}
           </h2>
 
           <div className="space-y-6">
-            {[
-              {
-                question: 'What is your typical response time?',
-                answer:
-                  "I usually respond to inquiries within 24 hours during business days. For urgent matters, feel free to contact me directly via email or LinkedIn.",
-              },
-              {
-                question: 'Do you work with agencies or only direct clients?',
-                answer:
-                  'I work with both agencies and direct clients. Each project is evaluated based on its requirements, timeline, and alignment with my expertise.',
-              },
-              {
-                question: 'What is your project process?',
-                answer:
-                  'I follow a structured approach: discovery, planning, design creation, development, testing, and deployment. Regular communication and feedback loops ensure the final product meets your expectations.',
-              },
-              {
-                question: 'What is your pricing model?',
-                answer:
-                  'Pricing depends on project scope, complexity, and duration. I offer both project-based and hourly rates. Let\'s discuss your specific needs to find the best arrangement.',
-              },
-            ].map((faq, index) => (
+            {messages.contact.faqs.map((faq, index) => (
               <div
                 key={index}
                 className="p-6 bg-white border border-light-gray rounded-lg hover:border-primary-blue transition-all"

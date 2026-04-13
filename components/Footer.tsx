@@ -6,6 +6,7 @@ import type { MouseEvent } from 'react'
 import { FiMail } from 'react-icons/fi'
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
+import { useLanguage } from '@/components/LanguageProvider'
 
 function ArrowUpIcon({ className }: { className?: string }) {
   return (
@@ -17,6 +18,7 @@ function ArrowUpIcon({ className }: { className?: string }) {
 
 export default function Footer() {
   const pathname = usePathname()
+  const { messages } = useLanguage()
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -40,34 +42,34 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* About Section */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Frontend Developer</h3>
+            <h3 className="text-xl font-bold mb-4">{messages.footer.aboutTitle}</h3>
             <p className="text-light-gray leading-relaxed">
-              Creating beautiful, functional, and accessible web experiences with modern technologies.
+              {messages.footer.aboutDescription}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+            <h3 className="text-xl font-bold mb-4">{messages.footer.quickLinks}</h3>
             <nav className="space-y-2">
               <Link href="/" className="text-light-gray hover:text-accent-gold transition-colors">
-                Home |&nbsp;
+                {messages.header.nav.home} |&nbsp;
               </Link>
               <Link href="/portfolio" className="text-light-gray hover:text-accent-gold transition-colors">
-                Portfolio |&nbsp;
+                {messages.header.nav.portfolio} |&nbsp;
               </Link>
               <Link href="/about" className="text-light-gray hover:text-accent-gold transition-colors">
-                About |&nbsp;
+                {messages.header.nav.about} |&nbsp;
               </Link>
               <Link href="/contact" className="text-light-gray hover:text-accent-gold transition-colors">
-                Contact
+                {messages.header.nav.contact}
               </Link>
             </nav>
           </div>
 
           {/* Social Links */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Connect</h3>
+            <h3 className="text-xl font-bold mb-4">{messages.footer.connect}</h3>
             <div className="flex items-center space-x-6">
               <a
                 href="https://github.com/sjottens"
@@ -91,7 +93,7 @@ export default function Footer() {
                 href="/contact#contact-form"
                 onClick={handleEmailClick}
                 className="text-light-gray hover:text-accent-gold transition-colors"
-                aria-label="Go to contact form"
+                aria-label={messages.footer.contactFormAria}
               >
                 <FiMail size={24} />
               </a>
@@ -105,14 +107,14 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between">
           <p className="text-light-gray text-sm">
-            © {new Date().getFullYear()} Frontend Developer. All rights reserved.
+            © {new Date().getFullYear()} {messages.footer.aboutTitle}. {messages.footer.rights}
           </p>
           <button
             onClick={scrollToTop}
             className="mt-4 md:mt-0 flex items-center gap-2 text-light-gray hover:text-accent-gold transition-colors"
-            aria-label="Back to top"
+            aria-label={messages.footer.backToTop}
           >
-            Back to top
+            {messages.footer.backToTop}
             <ArrowUpIcon className="h-5 w-5" />
           </button>
         </div>
