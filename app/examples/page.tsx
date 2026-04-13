@@ -1,4 +1,5 @@
 import LoaderDemo from '../../components/LoaderDemo'
+import InputFieldsDemo from '../../components/InputFieldsDemo'
 import { getMessages } from '@/lib/locale'
 import { getServerLocale } from '@/lib/locale.server'
 
@@ -27,6 +28,7 @@ export default async function ExamplesPage() {
             {messages.examplesPage.description}
           </p>
 
+          <InputFieldsDemo locale={locale} />
           <LoaderDemo locale={locale} />
         </div>
       </section>
